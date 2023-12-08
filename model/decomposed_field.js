@@ -71,7 +71,6 @@ class DecomposedField {
         let new_x = Math.floor(point.x / this.cell_width)
         let new_y = Math.floor(point.y / this.cell_height)
         let new_point = new Point(new_x, new_y)
-        console.log(new_point)
         if (this.is_free_point(new_point)) {
             return new_point
         }
@@ -84,8 +83,9 @@ class DecomposedField {
 
         for (let delta_x of [0, -1, 1]) {
             for (let delta_y of [0, -1, 1]) {
-                if (delta_y != 0 || delta_x != 0) {
-                    neighbors.push(new Point(x + delta_x, y + delta_y))
+                let new_point = new Point(x + delta_x, y + delta_y);
+                if ((delta_y != 0 || delta_x != 0) && this.is_valid_point(new_point)) {
+                    neighbors.push(new_point)
                 }
             }
         }
@@ -131,7 +131,7 @@ class DecomposedField {
 
             for (let neighbor of neighbors) {
                 const [x, y] = neighbor.coordinates
-                if (this.is_valid_point(neighbor) && copied_field[y][x] == false) {
+                if (copied_field[y][x] == false) {
                     queue.push(neighbor);
                     copied_field[y][x] = true
                     parents[neighbor] = current_point;
@@ -143,10 +143,55 @@ class DecomposedField {
         return null;
     }
 
-    find_path() {
+    tsp_greedy() {
+        let current = this.robot;
+        const path = [current];
+
+
+        while (path.length <= this.places.length) {
+            let minimal_distance = Infinity;
+            let closest_place = null;
+            for (const place of this.places) {
+                let distance = current.distance_to(place)
+                if (!path.includes(place) && distance < minimal_distance) {
+                    minimal_distance = distance;
+                    closest_place = place
+                }
+            }
+            path.push(closest_place);
+            current = closest_place;
+        }
+        return path;
+    }
+
+    get_adjacency_matrix() {
+        let adjacency_matrix = []
+        for (let place_1 of this.places) {
+            let line = []
+            for (let place_2 of this.places) {
+                if (place_1.equals(place_2)) {
+                    line.push(Infinity)
+                } else {
+                    let path = this.bfs(place_1, place_2);
+
+                    if (path == null) {
+                        line.push(Infinity)
+                    } else {
+                        line.push(path.length)
+                    }
+                }
+            }
+            adjacency_matrix.push(line)
+        }
+        return adjacency_matrix;
+    }
+
+    find_path(point_order = "greedy") {
+
         let total_path = []
 
         let places = [this.robot].concat(this.places)
+        if (point_order == "greedy") places = this.tsp_greedy()
 
         for (let i = 0; i < places.length - 1; i++) {
             let path_part = this.bfs(places[i], places[i + 1])

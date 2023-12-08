@@ -30,7 +30,6 @@ class FieldView {
     }
 
     draw_new_places() {
-        console.log("12313")
         let decomposed_field = this.field.decomposed_field;
 
         if (!field.is_decomposed()) return

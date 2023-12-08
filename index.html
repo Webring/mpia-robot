@@ -38,7 +38,7 @@
 
                             <input type="radio" class="btn-check" name="mouse_mode" id="add_triangle_mode"
                                    autocomplete="off" value="3">
-                            <label class="btn btn-outline-secondary" for="add_triangle_mode">Препядствие</label>
+                            <label class="btn btn-outline-secondary" for="add_triangle_mode">Препятствие</label>
                         </div>
                     </div>
                 </div>
@@ -61,6 +61,14 @@
                     </select>
                 </div>
 
+                <div class="input-group mb-3 w-100">
+                    <span class="input-group-text">Маршрут</span>
+                    <select class="form-select" id="point-order">
+                        <option value="auto">В указанном порядке</option>
+                        <option value="greedy" selected>Жадный алгоритм</option>
+                    </select>
+                </div>
+
                 <div class="btn-group mb-3 w-100">
                     <button class="btn btn-outline-secondary auto-render-click" type="button" id="render_button">
                         Рендер
@@ -71,7 +79,8 @@
                     <button class="btn btn-outline-secondary auto-render-click" type="button" id="find_path_button">
                         Найти путь
                     </button>
-                    <button class="btn btn-outline-secondary auto-render-click" type="button" id="execute_all_button">Все
+                    <button class="btn btn-outline-secondary auto-render-click" type="button" id="execute_all_button">
+                        Все
                     </button>
                 </div>
             </div>
@@ -94,7 +103,7 @@
 
                 <div class="form-check form-switch">
                     <input class="form-check-input auto-render-change" type="checkbox" id="show_barriers" checked>
-                    <label class="form-check-label" for="show_barriers">Препядствия</label>
+                    <label class="form-check-label" for="show_barriers">Препятствия</label>
                 </div>
 
                 <div class="form-check form-switch">
@@ -135,7 +144,7 @@
                 </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text" >Робот</span>
+                    <span class="input-group-text">Робот</span>
                     <input type="number" placeholder="x" class="form-control remove_arrows" id="robot_x_input">
                     <input type="number" placeholder="y" class="form-control remove_arrows" id="robot_y_input">
                 </div>

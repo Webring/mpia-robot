@@ -168,11 +168,13 @@ function find_path() {
     }
 
     if (view.field.decomposed_field == null) {
-        alert("Нельзя построить маршрут, если поле не декомпозированное поле")
+        alert("Нельзя построить маршрут, если поле не декомпозировано")
         return
     }
 
-    path = view.field.decomposed_field.find_path()
+    let point_order = document.getElementById("point-order").value
+
+    path = view.field.decomposed_field.find_path(point_order)
     if (path == null) {
         alert("Не удалось найти путь")
     } else {

@@ -12,6 +12,10 @@ class Point {
     toString() {
         return `(${this.x}, ${this.y})`
     }
+
+    distance_to(other_point){
+        return Math.sqrt(Math.pow(this.x - other_point.x, 2) +  Math.pow(this.y - other_point.y, 2))
+    }
 }
 
 class Triangle {
